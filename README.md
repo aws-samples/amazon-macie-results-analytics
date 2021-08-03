@@ -3,7 +3,9 @@ This project is focused on how to use Amazon Athena to perform analytics against
 
 
 ## Why is this needed?
-With Macie customers can run classification jobs across one or many S3 buckets and each bucket can contain one or many objects.  When Macie finds sensitive data in an object it creates a finding.  This finding is available to view in the Macie console and can also be consumed through Amazon Event Bridge.  To understand the full picture of a large Macie classification job customers need a comprehensive view of the results of a job so they can understand what was found and help them determine the next steps to take with their data.  Looking at each sensitive data finding that Macie generates and displays in the console can be time consuming and does not provide details on the scope of what was found in the overall job.  In addition to findings about discovered sensitive data, Macie also creates results files that cover the full scope of all objects scanned during a job.  With the results files from a job customers can learn: 
+With Macie customers can run classification jobs across one or many S3 buckets and each bucket can contain one or many objects.  When Macie finds sensitive data in an object it creates a finding.  This finding is available to view in the Macie console and can also be consumed through Amazon Event Bridge.  To understand the full picture of a large Macie classification job customers need a comprehensive view of the results of a job so they can understand what was found and help them determine the next steps to take with their data.  Looking at each sensitive data finding that Macie generates and displays in the console can be time consuming and does not provide details on the scope of what was found in the overall job.  
+
+In addition to findings about discovered sensitive data, Macie also creates results files that cover the full scope of all objects scanned during a job.  With the results files from a job customers can learn: 
     
 * Details about objects where sensitive data was found
 * Details about objects that could not be scanned due to unsupported file type or not having permissions to access the object.
@@ -16,10 +18,10 @@ With Amazon Athena queries can be run against the sensitive data discovery resul
 ## Setup
 
 ### Enable the job classification S3 bucket
-To run Athena queries on the results of Macie classification jobs you need to ensure that Macie is configured to store sensitive data discovery results in an S3 bucket.  This configuration should be done in the AWS account that you are running classification jobs from.  Details on how to configure the S3 repository for Macie can be found at: <a href="https://docs.aws.amazon.com/macie/latest/user/discovery-results-repository-s3.html" target="_blank">https://docs.aws.amazon.com/macie/latest/user/discovery-results-repository-s3.html</a>.  Once the results location is configured Macie will write the output of all new jobs to this location.  If you ran Macie jobs before configuring the results bucket Macie will also write any results files that have been generated in the past 90 days.
+To run Athena queries on the results of Macie classification jobs Macie must be configured to store sensitive data discovery results in an S3 bucket.  This configuration should be done in the AWS account that you are running classification jobs from.  Details on how to configure the S3 repository for Macie can be found at: <a href="https://docs.aws.amazon.com/macie/latest/user/discovery-results-repository-s3.html" target="_blank">https://docs.aws.amazon.com/macie/latest/user/discovery-results-repository-s3.html</a>.  Once the results location is configured Macie will write the output of all new jobs to this location.  If you ran Macie jobs before configuring the results bucket Macie will also write any results files that have been generated in the past 90 days.
 
 ### Permissions to read classification results with Athena
-In order to successfully query Macie classification results data the user or role that is running the Athena queries needs to ensure two permissions are in place, specific to the Macie classification results S3 bucket.
+To successfully query Macie classification results data the user or role that will run the Athena queries needs to ensure two permissions are in place, specific to the Macie classification results S3 bucket.
 
 #### Permissions to read data from the classifications results bucket
 The user or role that is running the Athena query will need an IAM policy that includes permissions to get objects from the Macie results bucket.   Below is a sample policy that grants the necessary permissions.  Make sure to replace <Macie Results Bucket Name> with the actual name of the S3 bucket that you configured to store Macie results files.  
@@ -68,25 +70,26 @@ Use the following steps to create the table:
 placeholder|replace with
 -----|-----
 REPLACE-JOBID|ID of the Macie Job that you want to perform analytics on.  There are two places where this needs replacement in the create table script|
-REPLACE-RESULTS-BUCKET-NAME|name of the bucket that you created to hold your macie classification details|
+REPLACE-RESULTS-BUCKET-NAME|Name of the S3 bucket that you created to hold your macie classification details|
 REPLACE-ACCOUNT-ID|ID of the account that you are running Macie jobs from|
-REPLACE-REGION|region that you are running Macie jobs in
+REPLACE-REGION|Region that you are running Macie jobs in
 
 
 
 #### Option 2 - Define a table for all jobs
 This option covers creating an Athena table that comprises the output for ALL Macie jobs.  This approach is useful if you are trying to get analytics across multiple jobs.  If you have a scheduled Macie job this table will enable you to query any new sensitive data that is discovered through each scheduled run of a job. 
+
 This approach should be used when trying to get summarized information across multiple job IDs.  When running a query for a specific job ID, using this table, Athena will scan all S3 results data for all jobs in order to retrieve your information, which will result in Athena charges for scanning all S3 data.  This full scan happens because this table does not have any partitions to guide Athena on where to find more specific information.  When looking to run analytics against a specific job the table in option 1 is recommended. 
 
 Use the following steps to create the table:
-1. Login to the Amazon Athena console in the region that you are running Macie jobs for.
+1. Navigate to the Amazon Athena console in the account and region that you are running Macie jobs in.
 2. In the Athena query editor copy and run the contents of the [create-macie-job-table-all-jobs.sql](athena-table-scripts/create-macie-job-table-all-jobs.sql) script.  Replace the placeholders in the create table script with the following information:
 
 placeholder|replace with
 -----|-----
-REPLACE-RESULTS-BUCKET-NAME|name of the bucket that you created to hold your Macie classification details|
+REPLACE-RESULTS-BUCKET-NAME|Name of the S3 bucket that you created to hold your Macie classification details|
 REPLACE-ACCOUNT-ID|ID of the account that you are running Macie jobs from|
-REPLACE-REGION|region that you are running Macie jobs in
+REPLACE-REGION|Region that you are running Macie jobs in
 
 ## Run queries
 Now that you have a table definition you can query the data related to your classification job.  A starting collection of queries is located in the queries folder of this repository.  These queries are intended to provide you a starting point and help answer common questions about the information related to a Macie job.  Feel fee to write your own queries that help address your specific needs or modify the ones that are provided in this repository.
