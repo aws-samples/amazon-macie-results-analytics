@@ -1,5 +1,5 @@
 --Macie specific job id summary information by category, and type
-
+--Replace table_name and jobid values before running
  
 select sensitive_data.category, 
        detections_data.type, 

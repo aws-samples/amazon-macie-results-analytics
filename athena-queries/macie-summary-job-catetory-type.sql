@@ -1,4 +1,5 @@
 --Macie Job summary information by job id, category, and type
+--Replace table_name before running
 
 select classificationdetails.jobId, 
        sensitive_data.category, 

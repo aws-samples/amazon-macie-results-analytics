@@ -1,4 +1,5 @@
 --Macie sensitive data location for an object for a spectific job
+--Replace table name and jobid values before running
 
 select resourcesaffected.s3object.key object,
        resourcesaffected.s3object.embeddedfiledetails.filepath embedded_file,
@@ -8,7 +9,7 @@ select resourcesaffected.s3object.key object,
        null sensitive_data_page_location,
        null sensitive_data_record_location,
        null sensitive_data_cells_location
-from <table name> ,
+from <table_name> ,
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data),
      unnest(detections_data.occurrences.lineranges) as t(line_ranges)
@@ -22,7 +23,7 @@ select resourcesaffected.s3object.key object,
        detection_pages sensitive_data_page_location,
        null sensitive_data_record_location,
        null sensitive_data_cells_location
-from <table name>,
+from <table_name>,
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data),
      unnest(detections_data.occurrences.pages) as t(detection_pages)
@@ -36,7 +37,7 @@ select resourcesaffected.s3object.key object,
        null sensitive_data_page_location,
        detection_records sensitive_data_record_location,
        null sensitive_data_cells_location
-from <table name>,
+from <table_name>,
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data),
      unnest(detections_data.occurrences.records) as t(detection_records)
@@ -50,7 +51,7 @@ select resourcesaffected.s3object.key object,
        null sensitive_data_page_location,
        null sensitive_data_record_location,
        detection_cells sensitive_data_cells_location
-from <table name>,
+from <table_name>,
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data),
      unnest(detections_data.occurrences.cells) as t(detection_cells)

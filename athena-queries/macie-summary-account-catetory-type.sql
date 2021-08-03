@@ -1,10 +1,11 @@
---Macie job informatoin by account, category, and type
+--Macie job information by account, category, and type
+--Replace table_name before running
 
 select accountid, 
        sensitive_data.category, 
        detections_data.type, 
        sum(cast(detections_data.count as INT)) total_detections
-from <table name>,
+from <table_name>,
    unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
    unnest(sensitive_data.detections) as t(detections_data)
 where classificationdetails.result.sensitiveData is not null

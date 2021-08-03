@@ -1,10 +1,11 @@
 --Macie category and type summary by bucket
+--Replace table_name before running
 
 select resourcesaffected.s3bucket.name as bucket_name, 
        sensitive_data.category, 
        detections_data.type, 
        sum(cast(detections_data.count as INT)) total_detections
-from <table name>, 
+from <table_name>, 
    unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
    unnest(sensitive_data.detections) as t(detections_data)
 where classificationdetails.result.sensitiveData is not null
