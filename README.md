@@ -5,9 +5,9 @@ This project is focused on how to perform analytics against the detailed classif
 ## Why is this needed?
 With Macie customers can run classification jobs across one or many buckets and each bucket can contain one or many objects.  When Macie finds sensitive data in an object it creates a finding.  This finding is available to view in the Macie console and can also be consumed through Amazon Event Bridge.  To understand the full picture of a large Macie classification job customers need a comprehensive view of the results of a job so they can understand what was found and help them determine the next steps.  Looking at each sensitive data finding that Macie generates and displays in the console can be time consuming and does not provide details on the scope of what was found in the overall job.  In addition to findings about discovered sensitive data Macie also creates results files that cover the full scope of all objects scanned during a job.  With the results files from a job customers can learn: 
     
-    * Details about objects where sensitive data was found
-    * Details about objects that could not be scanned due to unsupported file type or not having permissions to access the object.
-    * Details about objects that were scanned and no sensitive data was found.   
+* Details about objects where sensitive data was found
+* Details about objects that could not be scanned due to unsupported file type or not having permissions to access the object.
+* Details about objects that were scanned and no sensitive data was found.   
 
 For a job where many objects are scanned viewing individual results files can be time consuming and makes it difficult to understand the overall results of a job. 
 
