@@ -47,7 +47,7 @@ Each file that Macie writes to the classification results bucket is server side 
         "Sid": "Allow access for athena user",
         "Effect": "Allow",
         "Principal": {
-            "AWS": "arn:aws:iam::<account ID>:role/athena-role"
+            "AWS": "arn:aws:iam::<account ID>:role/<role name>"
         },
         "Action": "kms:Decrypt",
         "Resource": "*"
