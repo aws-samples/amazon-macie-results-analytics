@@ -5,6 +5,6 @@ select classificationdetails.result.status.code,
        classificationdetails.result.status.reason, 
        count(*) as total_count
 from <table_name>
-where classificationdetails.jobId = <jobid>
+where classificationdetails.jobId = '<jobid>'
 group by classificationdetails.result.status.code, 
          classificationdetails.result.status.reason;

@@ -9,7 +9,7 @@ select resourcesaffected.s3object.key object,
        null sensitive_data_page_location,
        null sensitive_data_record_location,
        null sensitive_data_cells_location
-from <table_name> ,
+from <table_name>,
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data),
      unnest(detections_data.occurrences.lineranges) as t(line_ranges)

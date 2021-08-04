@@ -7,7 +7,7 @@ select sensitive_data.category,
 from <table_name>, 
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data)
-where classificationdetails.jobId = <jobid>
+where classificationdetails.jobId = '<jobid>'
 and classificationdetails.result.sensitiveData is not null
 and  resourcesaffected.s3object.embeddedfiledetails is null
 group by sensitive_data.category, 

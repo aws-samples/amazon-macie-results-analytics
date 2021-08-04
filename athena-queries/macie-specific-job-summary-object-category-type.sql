@@ -8,7 +8,7 @@ select resourcesaffected.s3object.key,
 from <table_name), 
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data)
-where classificationdetails.jobid = <jobid> 
+where classificationdetails.jobid = '<jobid>'
 and classificationdetails.result.sensitiveData is not null
 and resourcesaffected.s3object.embeddedfiledetails is null
 order by total_detections desc
