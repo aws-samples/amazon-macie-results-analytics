@@ -1,4 +1,4 @@
--- creates a table covering the macie output for a single macie job
+-- Creates a table covering the macie output for a single macie job.  Delete this comment line before running in athena console.
 
 CREATE EXTERNAL TABLE `maciedetail_job_REPLACE-JOB-ID`(
   `accountid` string, 

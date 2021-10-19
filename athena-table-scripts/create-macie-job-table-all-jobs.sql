@@ -1,4 +1,4 @@
--- creates a table covering the macie output for all macie jobs
+-- creates a table covering the macie output for all macie jobs.  Delete this comment line before running in athena console.
 
 
 CREATE EXTERNAL TABLE maciedetail_all_jobs(
