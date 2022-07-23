@@ -5,7 +5,7 @@ select resourcesaffected.s3object.key,
        sensitive_data.category, 
        detections_data.type, 
        cast(detections_data.count as INT) total_detections
-from <table_name), 
+from <table_name>, 
      unnest(classificationdetails.result.sensitiveData) as t(sensitive_data),
      unnest(sensitive_data.detections) as t(detections_data)
 where classificationdetails.jobid = '<jobid>'
