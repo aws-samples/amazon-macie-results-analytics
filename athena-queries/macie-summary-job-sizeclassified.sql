@@ -1,5 +1,10 @@
---Macie  job info showing size of files processed
---Replace table_name before running
+/*
+|
+| Query that gives sum of bytes and GB classified by job id
+| Replace table_name value before running
+|
+*/
+
 
 select classificationdetails.jobId, 
        sum(cast(classificationdetails.result.sizeClassified as INT)) as Bytes_classified, 

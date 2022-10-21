@@ -1,5 +1,15 @@
---Macie sensitive data location for an object for a spectific job
---Replace table name and jobid values before running
+/*
+|
+| Query that will show the location of sensitive data for Macie findings.
+| This query works for findings that were created by Macie's managed data identifiers.
+| If you are using custom data identifiers the macie-object-sensitive-data-location-details-CDI.sql
+| script will report on locations for findings tied to custom data identifers.
+| Replace table name and jobid values before running
+|
+| UNION is used in this query to account for different ways that data location is reported
+| for different file types.
+|
+*/
 
 select resourcesaffected.s3object.key object,
        resourcesaffected.s3object.embeddedfiledetails.filepath embedded_file,

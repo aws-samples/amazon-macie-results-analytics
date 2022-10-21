@@ -1,5 +1,9 @@
---Macie job status and job reason by account
---Replace table_name before running
+/*
+|
+| Query that gives a summary by status code and reason
+| Replace table_name value before running
+|
+*/
 
 select accountid, 
       classificationdetails.result.status.code, 

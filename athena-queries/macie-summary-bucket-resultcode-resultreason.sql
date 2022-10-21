@@ -1,5 +1,9 @@
---Macie result status code and reason by bucket
---Replace table_name before running
+/*
+|
+| Query that gives a summary by bucket, status code, and reason
+| Replace table_name value before running
+|
+*/
 
 select resourcesaffected.s3bucket.name as bucket_name, 
       classificationdetails.result.status.code, 

@@ -1,5 +1,9 @@
---Macie Job info with result status code and reason
---Replace table_name and jobid values before running
+/*
+|
+| Query that runs for a specific job and gives a summary by status code and reason
+| Replace table_name and jobid values before running
+|
+*/
 
 select classificationdetails.result.status.code, 
        classificationdetails.result.status.reason, 
